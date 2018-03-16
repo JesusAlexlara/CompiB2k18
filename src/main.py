@@ -33,7 +33,8 @@ class MainAppCompiB(QMainWindow):
         self.setCentralWidget(self.editor)
 
     def set_init_window_ui(self):
-        self.setWindowTitle('Compiladores e Interpretes B')
+        self.setWindowTitle('Compiladores e Interpretes B - *')
+        print(self.windowTitle())
         self.resize(1000, 1000)
         self.showMaximized()
 
@@ -53,13 +54,23 @@ class MainAppCompiB(QMainWindow):
         # EDIT MENU
         edit_menu = menu.addMenu('&Editar')
         edit_menu.addAction(self.undo)
+        edit_menu.addAction(self.redo)
+        file_menu.addSeparator()
+        edit_menu.addAction(self.copy)
+        edit_menu.addAction(self.cut)
+        edit_menu.addAction(self.paste)
+
 
         # CODE MENU
         code_menu = menu.addMenu('&Codigo')
-        code_menu.addAction(self.compilar)
+        code_menu.addAction(self.compile)
 
         # VIEW MENU
         self.view_menu = menu.addMenu('&Ventanas')
+
+        # VIEW HELP
+        help_menu = menu.addMenu('&Ayuda')
+        help_menu.addAction(self.info)
 
     def set_toolBar(self):
         file_toolBar = self.addToolBar('Archivo')
@@ -71,34 +82,54 @@ class MainAppCompiB(QMainWindow):
         edit_toolBar.addAction(self.undo)
 
         code_toolBar = self.addToolBar('Codigo')
-        code_toolBar.addAction(self.compilar)
+        code_toolBar.addAction(self.compile)
 
     def create_actions(self):
-        self.file = QAction(QIcon(':/iconos/documento.png'), "&Nuevo", self, shortcut=QKeySequence.New,
-                            statusTip="Crea un nuevo documento")
+        #Action file menu
+        self.file = QAction(QIcon(':/iconos/documento.png'), "&Nuevo Archivo", self, shortcut=QKeySequence.New,
+                            statusTip="Crea un nuevo documento", triggered=self._new_file)
 
-        self.save = QAction(QIcon(':/iconos/guardar.png'), "&Guardar", self, shortcut=QKeySequence.Save,
-                            statusTip="Guarda el documento actual")
-
-        self.open = QAction(QIcon(':/iconos/abrir-archivo.png'), "&Abrir", self, shortcut=QKeySequence.Open,
+        self.open = QAction(QIcon(':/iconos/abrir-archivo.png'), "&Abrir Archivo", self, shortcut=QKeySequence.Open,
                             statusTip="Abre un archivo", triggered=self._open_file)
 
-        self.undo = QAction(QIcon(':/iconos/deshacer.png'), "&Deshacer", self, shortcut=QKeySequence.Undo,
-                            triggered=self._undo, statusTip="Regresa un cambio")
+        self.save = QAction(QIcon(':/iconos/guardar.png'), "&Guardar", self, shortcut=QKeySequence.Save,
+                            statusTip="Guarda el documento actual", triggered=self._save_file)
 
         self.save_as = QAction(QIcon(':/iconos/guardar-como.png'), "&Guardar como...", self,
                                shortcut='Ctrl+Shift+S',
                                triggered=self._save_file_as,
                                statusTip="Guarda el codigo en un lugar especificado")
 
-        self.compilar = QAction(QIcon(':/iconos/ensamblar.png'), "Compilar", self, shortcut="F5",
-                                statusTip="Compila el archivo actual")
-
-        self.simulateCode = QAction(QIcon(':/iconos/simular.png'), "Simular", self, shortcut="Ctrl+F5",
-                                    statusTip="Simula el documento actual")
-
-        self.quit = QAction("Salir", self, shortcut=QKeySequence.Quit, statusTip="Cierra la aplicación",
+        self.quit = QAction(QIcon(':/iconos/apagar.png'), "Salir", self, shortcut=QKeySequence.Quit, statusTip="Cierra la aplicación",
                             triggered=self._quit)
+
+        #Action Menu
+        self.undo = QAction(QIcon(':/iconos/deshacer.png'), "&Deshacer", self, shortcut=QKeySequence.Undo,
+                            triggered=self._undo, statusTip="Regresa un cambio")
+
+        self.redo = QAction(QIcon(':iconos/rehacer.png'), "&Rehacer", self, shortcut=QKeySequence.Redo,
+                            statusTip="Rehacer un cambio", triggered=self._redo)
+
+        self.copy = QAction("&Copiar", self, shortcut='Ctrl+C',
+                            statusTip="Copia el texto seleccionado", triggered=self._copy)
+
+        self.cut = QAction("C&ortar", self, shortcut='Ctrl+X',
+                            statusTip="Corta el texto seleccionado", triggered=self._cut)
+
+        self.paste = QAction("&Pegar", self, shortcut='Ctrl+V',
+                            statusTip="Pega el texto que se encuentra copiado", triggered=self._paste)
+
+        #Code Menu
+
+        self.compile = QAction(QIcon(':/iconos/compilar.png'), "Compilar", self, shortcut='F5',
+                                    statusTip="Compila el codigo fuente actual")
+
+        self.run = QAction(QIcon(':/iconos/compilar.png'), "Compilar", self, shortcut='F5',
+                                    statusTip="Compila el codigo fuente actual")
+
+        #Help acctions
+        self.info = QAction(QIcon(':/iconos/informacion.png'), "Informacion", self, shortcut='Ctrl+I',
+                            triggered=self._info)
 
     def create_dockWindow(self):
         dock = QDockWidget('Tabla de simbolos', self)
@@ -109,7 +140,34 @@ class MainAppCompiB(QMainWindow):
         self.addDockWidget(Qt.RightDockWidgetArea, dock)
         self.view_menu.addAction(dock.toggleViewAction())
 
+    def save_changes(self):
+        msgBox = QMessageBox()
+        msgBox.setText("Todo cambio que no haya sido guardado se perdera")
+        msgBox.setInformativeText("¿Quieres guardar los cambios?")
+        msgBox.setStandardButtons(QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
+        msgBox.setDefaultButton(QMessageBox.Save)
+
+        res = msgBox.exec()
+        if res == QMessageBox.Save:
+            file = self.windowTitle().split('-')[1]
+            if file == '*':
+                self._save_file_as()
+                self.editor.clear()
+                self.setWindowTitle('Compiladores e Interpretes B - *')
+            else:
+                self._save_file()
+                self.editor.clear()
+                self.setWindowTitle('Compiladores e Interpretes B - *')
+        elif res == QMessageBox.Discard:
+            self.setWindowTitle('Compiladores e Interpretes B - *')
+        elif res == QMessageBox.Cancel:
+            return False
+        return True
+
     ###Funciones para los eventos de las acciones###
+    def _new_file(self):
+        if not "*" in self.windowTitle():
+            self.save_changes()
 
     def _open_file(self):
         """Funcion que abre un archivo de codigo fuente con extencion .tny"""
@@ -118,10 +176,27 @@ class MainAppCompiB(QMainWindow):
             file_name = str(file).split('/')[-1]  # Para la compatibilidad en windows
             with open(file, 'rt') as text:
                 if self.editor.text():
-                    pass
+                    if self.save_changes():
+                        self.editor.clear()
+                        self.editor.setText(text.read())
+                        self.statusBar().showMessage("Archivo '%s' cargado." % file_name, 3500)
+                        self.setWindowTitle("Compiladores e Interpretes B-%s" % file)
                 else:
+                    self.editor.clear()
                     self.editor.setText(text.read())
                     self.statusBar().showMessage("Archivo '%s' cargado." % file_name, 3500)
+                    self.setWindowTitle("Compiladores e Interpretes B-%s" % file)
+
+    def _save_file(self):
+        if not "*" in self.windowTitle():
+            file = self.windowTitle().split('-')[1]
+            if file:
+                file_name = str(file).split('/')[-1].lstrip()#Para que funcione en windows
+                with open(file, 'w') as w_file:
+                    w_file.write(str(self.editor.text()))
+                    self.statusBar().showMessage("Archivo '%s' guardado." % file_name, 3500)
+        else:
+            self._save_file_as()
 
     def _save_file_as(self):
         """Funcion para guardar un archivo de codigo fuente en una direcciones especificada por el usuario"""
@@ -133,14 +208,38 @@ class MainAppCompiB(QMainWindow):
             with open(file, 'w') as w_file:
                 w_file.write(text)
                 self.statusBar().showMessage("Archivo '%s' guardado." % file_name, 3500)
+                self.setWindowTitle("Compiladores e Interpretes B-%s" % file)
 
     def _quit(self):
         """Funcion que termina la aplicacion"""
+        self.save_changes()
         QCoreApplication.quit()
 
     def _undo(self):
         """Funcion accesible desde Qscintilla"""
         return self.editor.undo()
+
+    def _redo(self):
+        """Funcion accesible desde Qscintilla"""
+        return self.editor.redo()
+
+    def _copy(self):
+        """Funcion accesible desde Qscintilla"""
+        return  self.editor.copy()
+
+    def _cut(self):
+        """Funcion accesible desde Qscintilla"""
+        return self.editor.cut()
+
+    def _paste(self):
+        """Funcion accesible desde Qscintilla"""
+        return self.editor.paste()
+
+    def _info(self):
+        """Funcion del evento que invoca la informacion de la aplicacion"""
+        info = '''Esta aplicacion fue escrita por Jesus Alejandro Lara para la materia de 
+        Compiladores e Interpretes B'''
+        QMessageBox.about(self, 'Sobre la Compiladores', info)
 
 
 
