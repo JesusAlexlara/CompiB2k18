@@ -2,13 +2,13 @@ from PyQt5.Qsci import *
 from PyQt5.QtGui import QFont, QFontMetrics, QColor
 
 FONT_FAMILY = "Source Code Pro"
-BACKGROUND_COLOR = '#f8f8f8'
+BACKGROUND_COLOR = '#FFFFFF'
 FOREGROUND_COLOR = '#535353'
-MARGIN_BACKGROUND = "#2b2b2b" # "#313335"
-MARGIN_FOREGROUND = "#676a6d"
-FOLD_MARGIN_BACKGROUND = "#2b2b2b" # "#313335"
+MARGIN_BACKGROUND = "#283149" # "#313335"
+MARGIN_FOREGROUND = "#ffffff"
+FOLD_MARGIN_BACKGROUND = "#404b69" # "#313335"
 EDGE_COLOR = "#BBB8B5"
-SEL_BACKGROUND = "#535353" # "#606060"
+SEL_BACKGROUND = "#51adcf" # "#606060"
 SEL_FOREGROUND = "#222222"
 IND_BACKGROUND = "#676a6d"
 IND_FOREGROUND = "#676a6d"
@@ -33,7 +33,7 @@ class Editor(QsciScintilla):
         self.font2 = QFont()
         self.font2.setFamily("Sans-Serif")
         self.font2.setFixedPitch(True)
-        self.font2.setPointSize(13)
+        self.font2.setPointSize(18)
         self.setFont(self.font)
         self.setMarginsFont(self.font)
         self.setStyleSheet("""
@@ -50,7 +50,7 @@ class Editor(QsciScintilla):
         # MARGIN LINE NUMBERS
         fontmetrics = QFontMetrics(self.font)
         self.setMarginsFont(self.font2)
-        self.setMarginWidth(0, fontmetrics.width("00000") + 4)
+        self.setMarginWidth(0, fontmetrics.width("0000") + 2)
         self.setMarginLineNumbers(0, True)
 
         # MARGIN BACKGROUND AND FOREGROUND
@@ -86,12 +86,12 @@ class Editor(QsciScintilla):
 
         # FOLDING MARGIN
         self.setFolding(QsciScintilla.PlainFoldStyle)
-        self.setMarginWidth(2, 10) # (2,14)
+        self.setMarginWidth(2, 15) # (2,14)
         # FOLDING MARKERS
-        self.markerDefine("V", QsciScintilla.SC_MARKNUM_FOLDEROPEN)
-        self.markerDefine(">", QsciScintilla.SC_MARKNUM_FOLDER)
-        self.markerDefine("V", QsciScintilla.SC_MARKNUM_FOLDEROPENMID)
-        self.markerDefine(">", QsciScintilla.SC_MARKNUM_FOLDEREND)
+        #self.markerDefine("V", QsciScintilla.SC_MARKNUM_FOLDEROPEN)
+        #self.markerDefine(">", QsciScintilla.SC_MARKNUM_FOLDER)
+        #self.markerDefine("V", QsciScintilla.SC_MARKNUM_FOLDEROPENMID)
+        #self.markerDefine(">", QsciScintilla.SC_MARKNUM_FOLDEREND)
 
         # FOLDING MARKERS BACKGROUND AND FOREGROUND
         self.setMarkerBackgroundColor(QColor(MARKER_BACKGROUND))
@@ -106,7 +106,7 @@ class Editor(QsciScintilla):
         self.setAutoCompletionThreshold(2)
 
         # DISABLE HORIZONTAL SCROLLBAR
-        self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
+        #self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
 
         self.setStyleSheet("""
         QsciScintilla
