@@ -13,11 +13,14 @@ class LexerTiny(PyQt5.Qsci.QsciLexerCustom):
     }
 
     keyword_list = [
-        "if","endif","else","endif","repeat","until", "id", "var","switch",
-        "for", "case", "endswitch", "break", "while", "endwhile"
+       'CreaVentana', 'CreaLabel', 'CreaBoton', 'CreaTextbox', 'CreaEvento', 'Main', 'if',
+        'else', 'repeat', 'until', ':=', 'while', 'swich', 'case', 'break', 'deafult',
+        'for', 'CierraVentana', 'LeeTextBox', 'Loop', 'ImprimeTextBox', 'Concat', 'Mbox', 'def', 'loop'
+
     ]
     unsafe_keyword_list = [
-        "int", "float", "string", "char"
+        "int", "float", "string", "vent", "textBox", "label", "boton"
+        "boton", "label"
     ]
 
     def __init__(self, parent=None):
