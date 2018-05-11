@@ -1,8 +1,8 @@
 # Compiladores e interpretes B
 ## Proyecto individual
 
-Interface 85%
-Tokenizado 15%
+Interface 90%
+Tokenizado 100% Faltan mas pruebas
 Analsis sintactico y semantico 0%
 
 ### Requerimientos previos.

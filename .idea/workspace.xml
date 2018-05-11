@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="102a37ec-d434-4603-8bca-e889df0df647" name="Default" comment="Se agregaron las palabras clave al editor de codigo">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/core/Lexer/lexer.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/core/Parser/tablaAS.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/core/Parser/tablaAnalisis.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/core/lexerEditor.py" afterPath="$PROJECT_DIR$/src/core/lexerEditor.py" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -104,7 +99,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/Lexer/lexer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-187">
@@ -112,6 +107,16 @@
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -151,10 +156,11 @@
         <option value="$PROJECT_DIR$/src/core/Parser/tablaAnalisis.py" />
         <option value="$PROJECT_DIR$/src/core/Parser/tablaAS.csv" />
         <option value="$PROJECT_DIR$/src/core/Lexer/lexer.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="487" />
     <option name="y" value="37" />
     <option name="width" value="902" />
@@ -290,7 +296,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="487" y="37" width="1366" height="724" extended-state="7" />
+    <frame x="487" y="37" width="1366" height="724" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.183172" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -795,6 +801,14 @@
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
