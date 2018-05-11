@@ -9,7 +9,7 @@ from core.lexerEditor import LexerTiny
 from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream, QSize
 import sys
 import iconos_rc
-from core.Parser.tablaAnalisis import tablaSL
+from core.Parser.tablaAnalisis import tablaSLHeaderName, genera_tabla, tablaSL
 from core.Lexer.lexer import lex
 
 
@@ -176,6 +176,8 @@ class MainAppCompiB(QMainWindow):
         self.tab_ans.setColumnCount(4)
         self.tab_ans.setHorizontalHeaderLabels(headerLabels)
 
+        self.tab_ans.resizeColumnsToContents()
+
     def create_dockTabAcciones(self):
         dock = QDockWidget('Tabla de Acciones')
 
@@ -190,6 +192,19 @@ class MainAppCompiB(QMainWindow):
         ##Inicializa tabla
         self.tab_acc.setColumnCount(77)
         self.tab_acc.setHorizontalHeaderLabels(tablaSL)
+
+        ##Inserta datos
+        tabla = genera_tabla()
+        self.tab_acc.setRowCount(len(tabla))
+        c = 0
+        for n in tabla:
+            a = 0
+            for p in tablaSL:
+                self.tab_acc.setItem(c, a, QTableWidgetItem(n[p]))
+                a = a + 1
+            c = c + 1
+
+        self.tab_acc.resizeColumnsToContents()
 
     def save_changes(self):
         msgBox = QMessageBox()
