@@ -23,7 +23,7 @@ exp_tokens = [
     [r'(break?)(?=;)', 'break', RESERVADA],
     [r'(def?)(?=\s)', 'def', RESERVADA],
     [r'(CreaVentana?)(?=\()', 'CreaVentana', RESERVADA],
-    [r'[+-]?[0-9]+(.[0-9])+?', 'num', KEYWORD],
+    [r'[0-9]+', 'num', KEYWORD],
     [r',', ',', RESERVADA],
     [r'(CreaLabel?)(?=\()', 'CreaLabel', RESERVADA],
     [r'(CreaBoton?)(?=\()', 'CreaBoton', RESERVADA],

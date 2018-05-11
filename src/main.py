@@ -6,9 +6,10 @@ from PyQt5.QtWidgets import (QAction, QApplication, QDialog, QDockWidget, QFileD
 from PyQt5.Qsci import *
 from core.editor import Editor
 from core.lexerEditor import LexerTiny
-from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream
+from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream, QSize
 import sys
 import iconos_rc
+from core.Parser.tablaAnalisis import tablaSL
 from core.Lexer.lexer import lex
 
 
@@ -31,6 +32,7 @@ class MainAppCompiB(QMainWindow):
         self.create_dockTabSim()
         self.create_dockTokens()
         self.create_dockAnalisis()
+        self.create_dockTabAcciones()
         #####
         self.setUnifiedTitleAndToolBarOnMac(True)
 
@@ -164,6 +166,7 @@ class MainAppCompiB(QMainWindow):
 
         self.tab_ans = QTableWidget(dock)
         dock.setWidget(self.tab_ans)
+        dock.resize(QSize(800, 400))
 
         self.addDockWidget(Qt.NoDockWidgetArea, dock)
         self.view_menu.addAction(dock.toggleViewAction())
@@ -172,6 +175,21 @@ class MainAppCompiB(QMainWindow):
         headerLabels = ('Pila Acciones', 'Cadena Entrada', 'Analisis Sintactico', 'Analisis Semantico')
         self.tab_ans.setColumnCount(4)
         self.tab_ans.setHorizontalHeaderLabels(headerLabels)
+
+    def create_dockTabAcciones(self):
+        dock = QDockWidget('Tabla de Acciones')
+
+        self.tab_acc = QTableWidget(dock)
+        dock.setWidget(self.tab_acc)
+        dock.resize(QSize(800, 400))
+
+
+        self.addDockWidget(Qt.NoDockWidgetArea, dock)
+        self.view_menu.addAction(dock.toggleViewAction())
+
+        ##Inicializa tabla
+        self.tab_acc.setColumnCount(77)
+        self.tab_acc.setHorizontalHeaderLabels(tablaSL)
 
     def save_changes(self):
         msgBox = QMessageBox()
