@@ -9,6 +9,7 @@ from core.lexerEditor import LexerTiny
 from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream
 import sys
 import iconos_rc
+from core.Lexer.lexer import lex
 
 
 class MainAppCompiB(QMainWindow):
@@ -26,7 +27,11 @@ class MainAppCompiB(QMainWindow):
         self.create_actions()
         self.set_menu()
         self.set_toolBar()
-        self.create_dockWindow()
+        #####
+        self.create_dockTabSim()
+        self.create_dockTokens()
+        self.create_dockAnalisis()
+        #####
         self.setUnifiedTitleAndToolBarOnMac(True)
 
         # INICIALIZACION DEL EDITOR DE CODIGO
@@ -122,7 +127,7 @@ class MainAppCompiB(QMainWindow):
         #Code Menu
 
         self.compile = QAction(QIcon(':/iconos/compilar.png'), "Compilar", self, shortcut='F5',
-                                    statusTip="Compila el codigo fuente actual")
+                                    statusTip="Compila el codigo fuente actual", triggered=self._compile)
 
         self.run = QAction(QIcon(':/iconos/compilar.png'), "Compilar", self, shortcut='F5',
                                     statusTip="Compila el codigo fuente actual")
@@ -131,14 +136,42 @@ class MainAppCompiB(QMainWindow):
         self.info = QAction(QIcon(':/iconos/informacion.png'), "Informacion", self, shortcut='Ctrl+I',
                             triggered=self._info)
 
-    def create_dockWindow(self):
+    def create_dockTabSim(self):
         dock = QDockWidget('Tabla de simbolos', self)
 
-        self.tabsim = QTableWidget(dock)
-        dock.setWidget(self.tabsim)
+        self.tab_sim = QTableWidget(dock)
+        dock.setWidget(self.tab_sim)
 
         self.addDockWidget(Qt.RightDockWidgetArea, dock)
         self.view_menu.addAction(dock.toggleViewAction())
+
+    def create_dockTokens(self):
+        dock = QDockWidget('Tokens', self)
+
+        self.tab_tokens = QTableWidget(dock)
+        dock.setWidget(self.tab_tokens)
+
+        self.addDockWidget(Qt.RightDockWidgetArea, dock)
+        self.view_menu.addAction(dock.toggleViewAction())
+
+        ##Inicializa la tabla.
+        headerLabels = ('Token', 'Valor lexico', 'tipo')
+        self.tab_tokens.setColumnCount(3)
+        self.tab_tokens.setHorizontalHeaderLabels(headerLabels)
+
+    def create_dockAnalisis(self):
+        dock = QDockWidget('Tabla Analisis Sintactico')
+
+        self.tab_ans = QTableWidget(dock)
+        dock.setWidget(self.tab_ans)
+
+        self.addDockWidget(Qt.NoDockWidgetArea, dock)
+        self.view_menu.addAction(dock.toggleViewAction())
+
+        ##Inicializa la tabla.
+        headerLabels = ('Pila Acciones', 'Cadena Entrada', 'Analisis Sintactico', 'Analisis Semantico')
+        self.tab_ans.setColumnCount(4)
+        self.tab_ans.setHorizontalHeaderLabels(headerLabels)
 
     def save_changes(self):
         msgBox = QMessageBox()
@@ -241,7 +274,18 @@ class MainAppCompiB(QMainWindow):
         Compiladores e Interpretes B'''
         QMessageBox.about(self, 'Sobre la Compiladores', info)
 
+    def _compile(self):
+        text = self.editor.text()
 
+        tokens = lex(text)
+        self.tab_tokens.setRowCount(len(tokens))
+        c = 0
+        for t in tokens:
+            self.tab_tokens.setItem(c, 0, QTableWidgetItem(t[0]))
+            self.tab_tokens.setItem(c, 1, QTableWidgetItem(t[1]))
+            self.tab_tokens.setItem(c, 2, QTableWidgetItem(t[2]))
+            c = c + 1
+        self.tab_tokens.resizeColumnsToContents()
 
 def main():
     app = QApplication(sys.argv)

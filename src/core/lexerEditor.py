@@ -19,7 +19,7 @@ class LexerTiny(PyQt5.Qsci.QsciLexerCustom):
 
     ]
     unsafe_keyword_list = [
-        "int", "float", "string", "vent", "textBox", "label", "boton"
+        "int", "float", "string", "vent", "textBox", "label",
         "boton", "label"
     ]
 

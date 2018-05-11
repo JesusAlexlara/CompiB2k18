@@ -1,0 +1,33 @@
+vent ventana ; textBox entrada , salida ; boton btn ; label ls ; int num;
+
+def click-evento {
+    int dato;
+    LeeTextBox(entrada, dato)
+    fibo()
+    ImprimeTextBox(salida, s)
+}
+
+def fibo {
+    int a, b;
+    int aux;
+    string s;
+    a := 1;
+    
+    while(a < dato) {
+        aux := a + b;
+        a := b;
+        b := a;
+        Concat(s, b)
+    }
+}
+
+Main {
+    CreaTextbox(entrada, ventana, 50, 50, 10, 550);
+    CreaTextbox(salida, ventana, 50, 80, 10, 550);
+    CreaLabel(ls, ventana, 10, 20, "Numero");
+    CreaBoton(btn, ventana, "Buscar", 100, 150, 20, 20);
+    CreaEvento(btn, click-evento);
+    
+    CreaVentana(ventana, "Fibo", 800, 600, 0, 0);
+    Loop(ventana);
+}
