@@ -1,9 +1,0 @@
-Var{int numero}
-
-while(numero < 10) {
-    numero := numero + 1
-}endwhile
-
-if(numero == 0) {
-    numero := -1
-}endif

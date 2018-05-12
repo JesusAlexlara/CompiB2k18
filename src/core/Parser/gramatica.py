@@ -26,21 +26,24 @@ sentencia-><def-vent>
 sentencia-><def-ctrl>
 sentencia-><def-evnt>
 sentencia-><sent-declara>
+
 sent-if->if(<exp>){<secuencia-sent>}
 sent-if->if(<exp>){<secuencia-sent>}else{<secuencia-sent>}
 sent-repeat->repeat{<secuencia-sent>}until(<exp>)
 sent-assign->id:=<exp>;
+
 sent-while->while(<exp>){<secuencia-sent>}
 sent-switch->switch(id){<secuencia-case>}
 secuencia-case-><secuencia-case><sentencia-case>
 secuencia-case-><sentencia-case>
 sentencia-case->case<const>{<secuencia-sent>}break;
+
 sentencia-default->default{<secuencia-sent>}break;
 sent-for->for(id=const:const,stepnum){<secuencia-sent>}
 sent-func->id();
 sent-func->CierraVentana(id);
 sent-func->LeeTextBox(id,id);
-sent-func->Loop(id);
+sent-func->l
 sent-func->ImprimeTextBox(id,id);
 sent-func->Concat(id,id);
 sent-func->Mbox(id);
@@ -81,6 +84,7 @@ const->id
 
 
 gramatica = [
+    ['programa\'', 'programa'],
     ['programa', 'estructura', 'def-main'],
     ['programa', 'def-main'],
     ['estructura', 'estructura', 'def'],
@@ -108,31 +112,58 @@ gramatica = [
     ['sentencia','def-ctrl'],
     ['sentencia','def-evnt'],
     ['sentencia','sent-declara'],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    ['sent-if', 'i', 'f', '(', 'exp', '{', 'secuencia-sent', '}'],
+    ['sent-if', 'i', 'f', '(', 'exp', '{', 'secuencia-sent', '}', 'e', 'l', 's', 'e', '{', 'secuencia-sent', '}'],
+    ['sent-repeat', 'r', 'e', 'p', 'e', 'a', 't', '{', 'secuencia-sent', '}', 'u', 'n', 't', 'i', 'l', '(', 'exp', ')'],
+    ['sent-assign', 'i', 'd', ':', '=', 'exp', ';'],
+    ['sent-while', 'w', 'h', 'i', 'l', 'e', '(', 'exp', ')', '{', 'secuencia-sent', '}'],
+    ['sent-switch', 's', 'w', 'i', 't', 'c', 'h', '(', 'i', 'd', ')', '{', 'secuencia-case', '}'],
+    ['secuencia-case', 'secuencia-case', 'sentencia-case'],
+    ['secuencia-case', 'sentencia-case'],
+    ['sentencia-case', 'c', 'a', 's', 'e', 'const', '{', 'secuencia-sent', '}', 'b', 'r', 'e', 'a', 'k', ';'],
+    ['sentencia-default', 'd', 'e', 'f', 'a', 'u', 'l', 't', '{', 'secuencia-sent', '}', 'b', 'r', 'e', 'a', 'k', ';'],
+    ['sent-for', 'f', 'o', 'r', '(', 'i', 'd', '=', 'c', 'o', 'n', 's', 't', ':', 'c', 'o', 'n', 's', 't', ',', 's', 't', 'e', 'p', 'n', 'u', 'm', ')', '{', 'secuencia-sen','}'],
+    ['sent-func','i', 'd', '(', ')', ';'],
+    ['sent-func','C', 'i', 'e', 'r', 'r', 'a', 'V', 'e', 'n', 't', 'a', 'n', 'a', '(', 'i', 'd', ')', ';'],
+    ['sent-func','L', 'e', 'e', 'T', 'e', 'x', 't', 'B', 'o', 'x', '(', 'i', 'd', ',', 'i', 'd', ')', ';'],
+    ['sent-func', 'L', 'o', 'o', 'p', '(', 'i', 'd', ')', ';'],
+    ['sent-func','I', 'm', 'p', 'r', 'i', 'm', 'e', 'T', 'e', 'x', 't', 'B', 'o', 'x', '(', 'i', 'd', ',', 'i', 'd', ')', ';'],
+    ['sent-func','C', 'o', 'n', 'c', 'a', 't', '(', 'i', 'd', ',', 'i', 'd', ')', ';'],
+    ['sent-func','M', 'b', 'o', 'x', '(', 'i', 'd', ')', ';'],
+    ['sent-declara', 'tipo', 'identificadores', ';'],
+    ['identificadores', 'identificadores', ',', 'i', 'd'],
+    ['identificadores', 'i', 'd'],
+    ['exp', 'exp-simple', 'op-comparacion','exp-simple'],
+    ['exp', 'exp-simple'],
+    ['op-comparacion','=', '='],
+    ['op-comparacion','>'],
+    ['op-comparacion','<'],
+    ['op-comparacion','>', '='],
+    ['op-comparacion','<', '='],
+    ['op-comparacion','!', '='],
+    ['exp-simple', 'exp-simple','opsuma', 'term'],
+    ['exp-simple', 'term'],
+    ['opsuma', '+'],
+    ['opsuma', '-'],
+    ['tipo','i', 'n', 't'],
+    ['tipo','f', 'l', 'o', 'a', 't'],
+    ['tipo','s', 't', 'r', 'i', 'n', 'g'],
+    ['tipo','v', 'e', 'n', 't'],
+    ['tipo','t', 'e', 'x', 't', 'B', 'o', 'x'],
+    ['tipo','l', 'a', 'b', 'e', 'l'],
+    ['tipo','b', 'o', 't', 'o', 'n'],
+    ['term', 'term', 'opmult', 'potencia'],
+    ['term', 'potencia'],
+    ['potencia', 'potencia', '^', 'factor'],
+    ['potencia', 'factor'],
+    ['opmult', '*'],
+    ['opmult', '/'],
+    ['factor', '(', 'exp',')'],
+    ['factor', 'n', 'u', 'm'],
+    ['factor', 'i', 'd'],
+    ['const', 'n', 'u', 'm'],
+    ['const', 'i', 'd'],
 ]
-
-
 
 
 

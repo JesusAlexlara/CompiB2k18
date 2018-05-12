@@ -9,8 +9,9 @@ from core.lexerEditor import LexerTiny
 from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream, QSize
 import sys
 import iconos_rc
-from core.Parser.tablaAnalisis import tablaSLHeaderName, genera_tabla, tablaSL
+from core.Parser.tablaAnalisis import genera_tabla, tablaSL
 from core.Lexer.lexer import lex
+from core.Parser.parser import Evalua_cadena
 
 
 class MainAppCompiB(QMainWindow):
@@ -319,6 +320,25 @@ class MainAppCompiB(QMainWindow):
             self.tab_tokens.setItem(c, 2, QTableWidgetItem(t[2]))
             c = c + 1
         self.tab_tokens.resizeColumnsToContents()
+        cadena = ""
+        for k in tokens:
+            cadena = cadena + k[0]
+
+        parser = Evalua_cadena(cadena)
+        parser.evalua()
+
+        self.tab_ans.setRowCount((len(parser.tabla_ac)))
+
+        c = 0
+        for t in parser.tabla_ac:
+            if t:
+                self.tab_ans.setItem(c, 0, QTableWidgetItem(t[0]))
+                self.tab_ans.setItem(c, 1, QTableWidgetItem(t[1]))
+                self.tab_ans.setItem(c, 2, QTableWidgetItem(t[2]))
+                self.tab_ans.setItem(c, 3, QTableWidgetItem('---'))
+            c = c + 1
+        self.tab_ans.resizeColumnsToContents()
+
 
 def main():
     app = QApplication(sys.argv)

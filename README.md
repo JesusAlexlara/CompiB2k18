@@ -1,9 +1,12 @@
 # Compiladores e interpretes B
 ## Proyecto individual
 
-Interface 90%
-Tokenizado 100% Faltan mas pruebas
-Analsis sintactico y semantico 0%
+#### Interface 90%
+#### Tokenizado 100%
+
+#### Analsis sintactico 95% 
+En la parte del manejo de la pila esta un poco mal lo voy a programar de nuevo pero manejando listas en lugar de trabajar directamente con strings
+#### semantico 0%
 
 ### Requerimientos previos.
 Python 3.5 o superior.

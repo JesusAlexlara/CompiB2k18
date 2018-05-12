@@ -1,0 +1,6 @@
+vent ventana; 
+textBox entrada;
+
+Main{
+
+}

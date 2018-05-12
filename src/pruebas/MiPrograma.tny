@@ -21,7 +21,7 @@ def fibo {
     }
 }
 
-Main {
+Main{
     CreaTextbox(entrada, ventana, 50, 50, 10, 550);
     CreaTextbox(salida, ventana, 50, 80, 10, 550);
     CreaLabel(ls, ventana, 10, 20, "Numero");
