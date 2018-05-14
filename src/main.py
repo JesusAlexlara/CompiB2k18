@@ -11,7 +11,7 @@ import sys
 import iconos_rc
 from core.Parser.tablaAnalisis import genera_tabla, tablaSL
 from core.Lexer.lexer import lex
-from core.Parser.parser import Evalua_cadena
+from core.Parser.parser import Evalua_cadena, Parser
 
 
 class MainAppCompiB(QMainWindow):
@@ -324,8 +324,15 @@ class MainAppCompiB(QMainWindow):
         for k in tokens:
             cadena = cadena + k[0]
 
-        parser = Evalua_cadena(cadena)
-        parser.evalua()
+        #parser = Evalua_cadena(cadena)
+        parser = Parser(cadena)
+        res = parser.evalua()
+
+        if not res:
+            QMessageBox.about(self, 'error', 'El codigo contiene errores')
+        else:
+            QMessageBox.about(self, 'ok', 'Codigo correcto')
+
 
         self.tab_ans.setRowCount((len(parser.tabla_ac)))
 

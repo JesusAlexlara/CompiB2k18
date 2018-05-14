@@ -1,10 +1,10 @@
 vent ventana ; textBox entrada , salida ; boton btn ; label ls ; int num;
 
-def click-evento {
+def click_evento {
     int dato;
-    LeeTextBox(entrada, dato)
-    fibo()
-    ImprimeTextBox(salida, s)
+    LeeTextBox(entrada, dato);
+    fibo();
+    ImprimeTextBox(salida, s);
 }
 
 def fibo {
@@ -17,7 +17,7 @@ def fibo {
         aux := a + b;
         a := b;
         b := a;
-        Concat(s, b)
+        Concat(s, b);
     }
 }
 

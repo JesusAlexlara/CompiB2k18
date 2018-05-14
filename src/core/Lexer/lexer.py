@@ -28,6 +28,7 @@ exp_tokens = [
     [r'(CreaLabel?)(?=\()', 'CreaLabel', RESERVADA],
     [r'(CreaBoton?)(?=\()', 'CreaBoton', RESERVADA],
     [r'(CreaEvento?)(?=\()', 'CreaEvento', RESERVADA],
+    [r'(CreaTextbox?)(?=\()', 'CreaTextbox', RESERVADA],
     [r'(Main?)(?={)', 'Main', RESERVADA],
     [r'(if?)(?=\()', 'if', RESERVADA],
     [r'(else?)(?={)', 'else', RESERVADA],

@@ -1,5 +1,8 @@
+from functools import reduce
+
 from .tablaAnalisis import genera_tabla
 from .gramatica import *
+import operator
 
 class Pila():
     def __init__(self):
@@ -19,6 +22,15 @@ class Pila():
 
     def peek(self):
         return self.items[-1]
+
+    @property
+    def str(self):
+        t = len(self.items) - 1
+        return reduce(operator.add, self.items[0:t])
+
+    @property
+    def str_full(self):
+        return reduce(operator.add, self.items)
 
 
 class Evalua_cadena:
@@ -106,3 +118,75 @@ class Evalua_cadena:
                 else:
                     cont = cont + 1
 
+
+class Parser:
+    def __init__(self, cadena):
+        self.cadena = cadena + '$'
+        self.tabla_as = genera_tabla()
+        self.gramatica = gramatica
+        self.tabla_ac = []
+
+    def evalua(self):
+        stack = Pila()
+        pila = Pila()
+
+        stack.push('$0')
+        pila.push(0)
+        edo = 0
+        i = 0
+        while i < len(self.cadena):
+            accion = []
+            c = self.cadena[i]
+            edo = pila.peek()
+            res = self.tabla_as[edo][c]
+
+            if 'd' in res:
+                edo_r = int(res[1:])
+                stack.push(c + str(edo_r))
+                pila.push(edo_r)
+
+                accion.append(stack.str)
+                accion.append(self.cadena[i:])
+                accion.append(res)
+                accion.append('')
+
+            elif 'r' in res:
+                res_b = res
+                d = int(res[1:])
+                produccion = self.gramatica[d][0]
+                rd = len(self.gramatica[d][1:])
+
+                accion.append(stack.str_full)
+
+                for xx in range(rd):
+                    stack.pop()
+                    pila.pop()
+
+                edo = pila.peek()
+                res = self.tabla_as[edo][produccion]
+                if not res.isdigit():
+                    return False
+
+                edo_r = int(res)
+                stack.push(produccion + str(edo_r))
+                pila.push(edo_r)
+
+                accion.append(self.cadena[i:])
+                accion.append(res_b + ' - ' + str_gram(d))
+                accion.append('')
+                i = i - 1
+            elif res == 'acc':
+                return True
+            else:
+                return False
+            self.tabla_ac.append(accion)
+            i = i + 1
+
+    def pos_gramatica(self, pos):
+        cont = 0
+        for elemento in self.gramatica:
+            for produccion in elemento:
+                if cont >= pos:
+                    return (elemento, produccion)
+                else:
+                    cont = cont + 1

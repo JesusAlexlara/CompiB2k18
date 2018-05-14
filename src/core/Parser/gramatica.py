@@ -82,6 +82,8 @@ const->num
 const->id
 '''
 
+from functools import reduce
+import operator
 
 gramatica = [
     ['programa\'', 'programa'],
@@ -166,6 +168,11 @@ gramatica = [
 ]
 
 
+def str_gram(p):
+    std = ''
+    for n in gramatica[p][1:]:
+        std = std + ' ' + n
+    return '( ' + str(gramatica[p][0]) + str(' -> ') + std + ' )'
 
 
 
