@@ -1,0 +1,44 @@
+int n,c,p,d,mod;
+string salida,s1;
+vent v1;
+boton b1;
+textBox tbNum, tbSalida;
+label lb;
+
+
+def primo{
+    LeeTextBox(tbNum,n);
+    c := 1;
+    p := 2;
+    d := 2;
+
+    while (c < n-1){
+        div := p / d;
+        mult := div * d;
+        mod := p - mult;     
+        if(mod == 0){
+            if(p == d){
+                Concat(salida,p);
+                c := c + 1;        
+            }
+            d := 2;
+            p := p + 1;
+        }
+        else{
+            d := d + 1;
+        }
+    } 
+    ImprimeTextBox(tbSalida,salida);  
+}
+
+Main {    
+
+	CreaVentana(v1, "Numeros Primos", 800, 600, 0, 0);
+	CreaBoton(b1, v1, "Procesar", 50, 25, 15, 30);
+	
+    CreaLabel(lb, v1, 40, 46, "Dame un numero");
+    CreaTextbox(tbNum, v1, 200, 200, 40, 56);
+    CreaTextbox(tbSalida, v1, 300, 200, 40, 56);    	
+	CreaEvento(b1, primo);	
+	Loop(v1);
+}

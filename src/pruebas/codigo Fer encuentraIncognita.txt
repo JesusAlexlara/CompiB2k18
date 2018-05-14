@@ -1,0 +1,140 @@
+﻿textBox tn1,top,tn2,tresU,tres;
+label lf,lxf,lop,ln2,lresU,lX,lxres;
+boton b;
+vent v;
+int n1,n2,resU,res,i,band;
+string op;
+
+def ventana
+{
+	CreaVentana(v,"Ecuación_1_incognita",20,20,630,260);
+	CreaLabel(v,lf,6,36,"Formato Ejemplo:5");
+	CreaLabel(v,lxf,207,36,"X");
+	CreaLabel(v,lop,330,36,"+");
+	CreaLabel(v,ln2,460,36,"5    =");
+	CreaLabel(v,lresU,570,36,"20");
+	CreaTextbox(v,tn1,53,61,100,20);
+	CreaLabel(v,lX,207,66,"X");
+	CreaTextbox(v,top,278,61,100,20);
+	CreaTextbox(v,tn2,410,61,100,20);
+	CreaTextbox(v,tresU,535,51,100,20);
+	CreaBoton(v,b,"RESOLVER",292,118,75,23);
+	CreaLabel(v,lxres,247,173,"X=");
+	CreaTextbox(v,tres,278,168,100,20);
+ }
+ 
+ def resuelveIncognita
+ {
+	res:=0;
+	i:=0;
+	band:=1;
+	LeeTextBox(tn1,n1);
+	LeeTextBox(tn2,n2);
+	LeeTextBox(tresU,resU);
+	LeeTextBox(top,op);
+	switch(op)
+	{
+		case "+"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)+n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		case "-"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)-n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		case "*"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)*n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		case "x"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)*n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		case "X"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)*n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		case "/"
+		{
+			while(band==1)
+			{
+				res:=(n1*i)/n2;
+				i:=i+1;
+				if(res==resU)
+				{
+					band:=0;
+				}
+			}
+			i:=i-1;
+			ImprimeTextBox(tres,i);
+		}
+		break;
+		default 
+		{
+			ImprimeTextBox(tres,"Error");
+		}
+		break;
+	}
+ }
+  
+ Main
+ {
+	ventana();
+	CreaEvento(b,resuelveIncognita);
+	Loop(v);
+ }

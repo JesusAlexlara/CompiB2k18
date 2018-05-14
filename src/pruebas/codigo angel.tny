@@ -1,0 +1,65 @@
+vent v;
+textBox t1,t2,t3,t4,t5;
+boton b;
+label l1,l2,l3,l4,l5;
+int x,c;
+float r1,r2,raiz,i;
+string s1,s2,s3,s4,s5;
+
+def Crea_Ventanas
+{
+	CreaVentana(v,"Programa",100,100,100,100);
+	CreaTextbox(v,t1,5,5,10,10);
+	CreaLabel(v,l1,5,15," X^2 + ");
+	CreaTextbox(v,t2,30,5,10,10);
+	CreaLabel(v,l2,5,45," X + ");
+	CreaTextbox(v,t3,55,5,10,10);
+	CreaLabel(v,l3,5,65," = 0 ");
+	CreaLabel(v,l4,5,45," X1= ");
+	CreaTextbox(v,t4,30,45,10,10);
+	CreaLabel(v,l5,5,70," X2= ");
+	CreaTextbox(v,t5,30,70,10,10);
+	CreaBoton(v,b,"Resolver",70,700,30,30);
+}
+
+def Asigna
+{
+	LeeTextBox(t1,s1);
+	LeeTextBox(t2,s2);
+	LeeTextBox(t3,s3);
+}
+def Resuelve
+{
+	r1:=0-s2+raiz/2*s1;
+	r2:=0-s2-raiz/2*s1; 
+}
+def Raiz
+{
+	i:=0;
+	raiz:=0;
+	while(x<raiz)
+	{
+		i:=i+0.1;
+		raiz:=i*1;
+	}	
+}
+def Imprime
+{
+	Concat(s4, r1);
+	Concat(s4, r2);
+	ImprimeTextBox(t4,s4);
+	ImprimeTextBox(t5,s5);
+}
+Main{
+	Crea_Ventanas();
+	Asigna();
+	x:=s2*s2-4*s1*s3;
+	c:=0-1;
+	if(x>c){
+		Raiz();	
+		Resuelve();
+		Imprime();
+	}
+
+    Loop(v);
+}

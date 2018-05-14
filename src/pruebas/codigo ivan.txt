@@ -1,0 +1,53 @@
+float Vxt , Vyt , V0 , t , angTblCos , angTblSen , g , rzCd,  rzX,vAngFx,vAngFy,rzY;
+string titulo, btnCal, lblVe,lblTiempo,anguloX,anguloY,veloXY; 
+vent ventanaMain ;
+boton buttonCalcular ; 
+textBox tbVel0 , tbTiempo , tbValTabCos , tbValTabSen , tbVelX, tbVelY ; 
+label labelVel0 , labelTiempo , labelValTabCos , labelValTabSen , labelMsxRes ; 
+def velocidadX { 
+ rzX := angTblCos ^ rzCd ; 
+vAngFx := rzX / 2 ; Vxt := V0 * vAngF ; 
+} 
+def asigna
+{
+titulo := "Calcula velocidad de un proyectil en tiempo t" ; 
+btnCal := "Calcula velocidad" ;
+lblVel := "Velocidad inicial" ; 
+ lblTiempo := "Tiempo" ;
+anguloX := "Valor en la tabla de angulo en X" ; 
+anguloY:= "Valor en la tabla de angulo en Y" ; 
+veloXY:= "La velocidad en X y Y es :" ; 
+}
+def velocidadY { 
+rzY := angTblSen ^ rzCd ; 
+vAngFy := rzY / 2 ; 
+Vyt := V0 * vAngFy - g * t ; 
+} 
+def  funcCal { velocidadX ( ) ; 
+velocidadY ( ) ; 
+} 
+Main {
+g := 9.81 ;
+rzCd := 1 / 2 ; 
+CreaVentana ( ventanaMain , titulo , 531 , 191 , 0 , 0 ) ; 
+CreaBoton ( buttonCalular , ventanaMain , btnCal , 12 , 51 , 502 , 81 ) ; 
+CreaLabel ( labelVel0 , ventanaMain , 12 , 9 , lblVel ) ; 
+CreaTextbox ( tbVel0 , ventanaMain , 12 , 25 , 130 , 45 ) ; 
+CreaLabel ( labelTiempo , ventanaMain , 136 , 9 , lblTiempo ) ; 
+CreaTextbox ( tbTiempo , ventanaMain , 136 , 25 , 254 , 45 ) ; 
+CreaLabel ( labelTabCos , ventanaMain , 260, 9 , anguloX ) ; 
+CreaTextbox ( tbValTabCos , ventanaMain , 260 , 25 , 378 , 45 ) ; 
+CreaLabel ( labelTabSen , ventanaMain , 384 , 9 , anguloY ) ; 
+CreaTextbox ( tbValTabSen , ventanaMain , 384 , 25 , 502 , 45 ) ; 
+CreaLabel ( labelMsxRes , ventanaMain , 12 , 84 , veloXY ) ; 
+CreaTextbox ( tbVelX , ventanaMain , 12 , 100 , 130 , 120 ) ; 
+CreaTextbox ( tbVelY , ventanaMain , 12 , 126 , 130 , 146 ) ; 
+CreaEvento ( buttonCalcular , funcCal ) ; 
+LeeTextBox ( tbVel0 , v0 ) ;  
+LeeTextBox ( tbTiempo , t ) ; 
+LeeTextBox ( tbValTabCos , angTblCos ) ; 
+LeeTextBox ( tbValTabSen , angTblSen ) ; 
+ImprimeTextBox ( tbVelX , Vxt ) ; 
+ImprimeTextBox ( tbVelY , Vyt ) ; 
+Loop ( ventanaMain ) ; 
+}

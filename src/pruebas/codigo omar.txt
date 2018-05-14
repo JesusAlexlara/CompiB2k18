@@ -1,0 +1,228 @@
+vent v;
+textBox t1,t2,t3,t4,t5,t6,t7,t8,t9;
+boton b;
+string c1,c2,c3,c4,c5,c6,c7,c8,temp1,temp3,resultado;
+int temp2,potencia2,potencia3,potencia4,potencia5,a,b,c,d,e,f,total,res;
+def ventana
+{
+ CreaVentana(v,"Main",100,100,100,100);
+ CreaTextbox(v,t1,5,10,10,10);
+ CreaTextbox(v,t2,10,10,10,10);
+ CreaTextbox(v,t3,15,10,10,10);
+ CreaTextbox(v,t4,20,10,10,10);
+ CreaTextbox(v,t5,30,10,10,10);
+ CreaTextbox(v,t6,35,10,10,10);
+ CreaTextbox(v,t7,40,10,10,10);
+ CreaTextbox(v,t8,45,10,10,10);
+ CreaTextbox(v,t9,10,20,10,10);
+ CreaBoton(v,b,"Aceptar",5,20,10,10);
+}
+def leeVariables
+{
+ LeeTextBox(t1,c1);
+LeeTextBox(t2,c2);
+LeeTextBox(t3,c3);
+LeeTextBox(t4,c4);
+LeeTextBox(t5,c5);
+LeeTextBox(t6,c6);
+LeeTextBox(t7,c7);
+LeeTextBox(t8,c8);
+}
+def convierteHD
+{
+ switch(temp1)
+{
+	case "1"
+	{temp2:=1;}
+	break;
+	case "2"
+	{temp2:=2;}
+	break;
+	case "3"
+	{temp2:=3;}
+	break;
+	case "4"
+	{temp2:=4;}
+	break;
+	case "5"
+	{temp2:=5;}
+	break;
+	case "6"
+	{temp2:=6;}
+	break;
+	case "7"
+	{temp2:=7;}
+	break;
+	case "8"
+	{temp2:=8;}
+	break;
+	case "9"
+	{temp2:=9;}
+	break;
+	case "A"
+	{temp2:=10;}
+	break;
+	case "B"
+	{temp2:=11;}
+	break;
+	case "C"
+	{temp2:=12;}
+	break;
+	case "D"
+	{temp2:=13;}
+	break;
+	case "E"
+	{temp2:=14;}
+	break;
+	case "F"
+	{temp2:=15;}
+	break;	
+}
+}
+def convierteDH
+{
+ switch(res)
+{
+	case 1
+	{temp3:="1";}
+	break;
+	case 2
+	{temp3:="2";}
+	break;
+	case 3
+	{temp3:="3";}
+	break;
+	case 4
+	{temp3:="4";}
+	break;
+	case 5
+	{temp3:="5";}
+	break;
+	case 6
+	{temp3:="6";}
+	break;
+	case 7
+	{temp3:="7";}
+	break;
+	case 8
+	{temp3:="8";}
+	break;
+	case 9
+	{temp3:="9";}
+	break;
+	case 10
+	{temp3:="A";}
+	break;
+	case 11
+	{temp3:="B";}
+	break;
+	case 12
+	{temp3:="C";}
+	break;
+	case 13
+	{temp3:="D";}
+	break;
+	case 14
+	{temp3:="E";}
+	break;
+	case 15
+	{temp3:="F";}
+	break;	
+}
+}
+def calculaNumero1
+{
+ temp1:=c1;
+ convierteHD();
+ a:=temp2*16;
+ a:=a^3;
+ temp1:=c2;
+ convierteHD();
+ b:=temp2*16;
+ b:=b^2;
+ temp1:=c3;
+ convierteHD();
+ c:=temp2*16;
+ temp1:=c4;
+ convierteHD();
+ d:=temp2;
+e:=a+b+c+d;
+}
+def calculaNumero2
+{
+ temp1:=c5;
+ convierteHD();
+ a:=temp2*16;
+ a:=a^3;
+ temp1:=c6;
+ convierteHD();
+ b:=temp2*16;
+ b:=b^2;
+ temp1:=c7;
+ convierteHD();
+ c:=temp2*16;
+ temp1:=c8;
+ convierteHD();
+ d:=temp2;
+f:=a+b+c+d;
+}
+def convertirTotal
+{
+potencia2:=16^2;
+pitencia3:=16^3;
+potencia4:=16^4;
+potencia5:=16^5;
+
+ while(total>0)
+{
+ if(total<16)
+ {
+  res:=total;
+  convierteDH();
+  Concat(resultado,temp3);
+ }
+ if(total<potencia2)
+ {
+  res:=total/16;
+  temp2:=res*16;
+  total:=total-temp2;
+  convierteDH();
+  Concat(resultado,temp3);
+ }
+ if(total<potencia3)
+ {
+  res:=total/potencia2;
+  temp2:=res*potencia2;
+  total:=total-temp2;
+  convierteDH();
+  Concat(resultado,temp3);
+ }
+if(total<potencia4)
+ {
+  res:=total/potencia3;
+  temp2:=res*potencia3;
+  total:=total-temp2;
+  convierteDH();
+  Concat(resultado,temp3);
+ }
+if(total<potencia5)
+ {
+  res:=total/potencia4;
+  temp2:=res*potencia4;
+  total:=total-temp2;
+  convierteDH();
+  Concat(resultado,temp3);
+ }
+}
+}
+Main{
+ventana();
+leeVariables();
+calculaNumero1();
+calculaNumero2();
+total:=e+f;
+convertirTotal();
+ImprimeTextBox(t9,resultado);
+}
+
+

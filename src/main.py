@@ -34,6 +34,7 @@ class MainAppCompiB(QMainWindow):
         self.create_dockTokens()
         self.create_dockAnalisis()
         self.create_dockTabAcciones()
+
         #####
         self.setUnifiedTitleAndToolBarOnMac(True)
 

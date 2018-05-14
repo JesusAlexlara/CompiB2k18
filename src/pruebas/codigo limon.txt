@@ -1,0 +1,71 @@
+vent v;
+textBox t1,t2, t3, t4 ,t5;
+int n1, n2, n3, n4, n5, naux;
+boton btnOrdenar;
+
+def creaVentana
+{
+    CreaVentana(v, "main", 100,100,100,100);
+    CreaTextbox(v, t1, 10, 10, 10, 10);
+    CreaTextbox(v, t2, 20, 10, 10, 10);
+    CreaTextbox(v, t3, 30, 10, 10, 10);
+    CreaTextbox(v, t4, 40, 10, 10, 10);
+    CreaTextbox(v, t5, 50, 10, 10, 10);
+    CreaBoton(v, btnOrdenar, "Ordenar", 70, 10, 10 ,10);
+}
+def ordena
+{
+    
+    int i;
+    for(i=0 : 5, step 1)
+    {
+        if(n1>n2)
+        {
+            naux := n1;
+            n1 := n2;
+            n2 := naux; 
+        }
+        if(n2>n3)
+        {
+            naux := n2;
+            n2 := n3;
+            n3 := naux; 
+        }
+        if(n3>n4)
+        {
+            naux := n3;
+            n3 := n4;
+            n4 := naux; 
+        }
+        if(n4>n5)
+        {
+            naux := n5;
+            n4 := n5;
+            n5 := naux; 
+        }
+    }
+}
+def leeNumeros
+{
+    LeeTextBox(t1,n1);
+    LeeTextBox(t2,n2);
+    LeeTextBox(t3,n3);
+    LeeTextBox(t4,n4);
+    LeeTextBox(t5,n5);
+    leeNumeros();
+    ordena();
+    imprimeNumeros();
+}
+	def imprimeNumeros
+    {
+        ImprimeTextBox(t1, n1);
+        ImprimeTextBox(t2, n2);
+        ImprimeTextBox(t3, n3);
+        ImprimeTextBox(t4, n4);
+        ImprimeTextBox(t5, n5);
+    }
+    Main
+    {
+        creaVentana();
+        CreaEvento(btnOrdenar, leeNumeros);
+    }

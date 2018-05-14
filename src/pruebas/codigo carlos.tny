@@ -1,0 +1,79 @@
+int max, min, medio, numDigitos;
+string pregunta, respuesta;
+
+def Adivina {
+	int i;
+
+	if(numDigitos == 0-1) {
+		LeeTextBox(tbRespuesta, numDigitos);
+		
+		for(i = 0 : numDigitos, step 1) {
+			max := max + 9 * 10 ^ i;
+		}
+
+		medio := (max - min) / 2;
+		pregunta := "Es tu numero >, < o = que: ";
+		Concat(pregunta, medio);
+
+		ImprimeTextBox(tbPregunta, pregunta);
+	} else {
+		LeeTextBox(tbRespuesta, respuesta);
+
+		switch (respuesta) {
+			case "<" {
+				max := medio;
+				medio := (max - min) / 2;
+
+				pregunta := "Es tu numero >, < o = que: ";
+				Concat(pregunta, medio);
+
+				ImprimeTextBox(tbPregunta, pregunta);
+			} break;
+
+			case ">" {
+				min := medio;
+				medio := (max - min) / 2;
+
+				pregunta := "Es tu numero >, < o = que: ";
+				Concat(pregunta, medio);
+
+				ImprimeTextBox(tbPregunta, pregunta);
+			} break;
+
+			case "=" {
+				CierraVentana(v1);
+			} break;
+
+			default {
+				pregunta := "Respuesta no valida. Es tu numero >, < o = que: ";
+				Concat(pregunta, medio);
+
+				ImprimeTextBox(tbPregunta, pregunta);
+			} break;
+		}
+	}
+}
+
+Main{
+	vent v1;
+	boton b1;
+	textBox tbPregunta, tbRespuesta;
+	label labelIn, labelOut;
+
+	numDigitos := -1;
+	max := 0;
+	min := 0;
+	medio := 0;
+
+	CreaVentana(v1, "Adivina numeros positivos", 800, 600, 0, 0);
+	CreaBoton(b1, v1, "Enviar", 50, 25, 15, 30);
+	CreaTextbox(tbPregunta, v1, 200, 200, 40, 56);
+	CreaTextbox(tbRespuesta, v1, 200, 200, 240, 56);
+	CreaLabel(labelIn, v1, 40, 46, "Pregunta");
+	CreaLabel(labelOut, v1, 240, 46, "Respuesta");
+	CreaEvento(b1, Adivina);
+
+	ImprimeTextBox(tbPregunta, "¿Numero de digitos?");
+
+	Loop(v1);
+}

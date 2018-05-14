@@ -1,0 +1,94 @@
+float fBase,fBase2,fAltura,fRadio,fArea,fPerimetro,fPi,fRaiz;
+int iContador;
+string sNombreFigura;
+vent vPrincipal;
+textBox tFigura,tBase,tBase2,tAltura,tRadio,tFinal1,tFinal2;
+boton bot1,bot2,bot3;
+label lEtiqueta,lEtiqueta2,lEtiqueta3;
+def figura
+{
+switch(sNombreFigura)
+{
+case triangulo
+{
+CreaTextbox(vPrincipal,tBase,5,5,10,10);
+CreaLabel(vPrincipal,lEtiqueta,3,3,"Introduce la base");
+LeeTextBox(tBase,fBase);
+CreaTextbox(vPrincipal,tAltura,5,15,10,25);
+CreaLabel(vPrincipal,lEtiqueta2,3,13,"Introduce la altura");
+LeeTextBox(tAltura,fAltura);
+CreaEvento(bot1,triangulo);
+}
+break;
+case cuadrado
+{
+CreaTextbox(vPrincipal,tBase,5,5,10,10);
+CreaLabel(vPrincipal,lEtiqueta,3,3,"Introduce la base");
+LeeTextBox(tBase,fBase);
+CreaEvento(bot1,cuadrado);
+}
+break;
+case circulo
+{
+CreaTextbox(vPrincipal,tRadio,5,5,10,10);
+CreaLabel(vPrincipal,lEtiqueta,3,3,"Introduce el radio");
+LeeTextBox(tRadio,fRadio);
+CreaEvento(bot1,circulo);
+}
+break;
+default
+{
+CreaTextbox(vPrincipal,tBase,5,5,10,10);
+CreaLabel(vPrincipal,lEtiqueta,3,3,"Introduce El Diametro 1");
+LeeTextBox(tBase,fBase);
+CreaTextbox(vPrincipal,tBase2,5,15,10,25);
+CreaLabel(vPrincipal,lEtiqueta2,3,13,"Introduce El diametro 2");
+LeeTextBox(tBase,fBase2);
+CreaEvento(bot1,elipse);
+}
+break;
+
+}
+}
+def cuadrado
+{
+fArea:=fBase*fBase;
+for(iContador=0:4,step 1)
+{
+fPerimetro := fPerimetro + fBase;
+}
+}
+def triangulo
+{
+fArea:=fBase* fAltura/2;
+for(iContador=0:3,step 1)
+{
+fPerimetro:=fPerimetro+fBase;
+}
+}
+def circulo
+{
+fPi := 3.1416;
+fPerimetro:=fPi*2*fRadio;
+fArea:=fRadio*fRadio;
+fArea:=fPi*fRadio;
+}
+def elipse
+{
+fPi := 3.1416;
+fArea:=fPi*fBase*fBase2;
+fPerimetro:=2*fPi;
+fRaiz:=fBase*fBase+fBase2*fBase2;
+fRaiz:=fRaiz/2;
+fRaiz:=fRaiz^1/2;
+fPerimetro:=fPerimetro*fRaiz;
+}
+Main
+{
+CreaVentana(vPrincipal,"Main",20,20,40,40);
+CreaBoton(vPrincipal,bot1,"Aceptar",5,5,10,10);
+CreaTextbox(vPrincipal,tFigura,5,5,10,10);
+CreaLabel(vPrincipal,lEtiqueta,3,3,"De Que Figura Deseas Calcular?");
+LeeTextBox(tFigura,sNombreFigura);
+CreaEvento(bot1,figura);
+}

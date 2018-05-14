@@ -1,0 +1,114 @@
+vent ventana;
+textBox t1, t2, t3, t4,t5,t6;
+boton btnMagnitud, btnDireccion;
+float x1, x2, y1, y2, res, magnitud, punto1, punto2, z1, z2, i, aux, x;
+int j;
+string s1, s2, s3, s4;
+label l1, l2, l3, l4;
+float numerador, denominador, temp1, temp2, sum, bse, exponente;
+int mod, i, j;
+def Ventana
+{
+CreaVentana(ventana, "Inicio", 500, 300, 250, 250);
+CreaLabel(ventana, l1, 120,50, "Introduce x1: ");
+CreaLabel(ventana, l2, 125,50, "Introduce y1: ");
+CreaLabel(ventana, l3, 130,50, "Introduce x2: ");
+CreaLabel(ventana, l4, 135,50, "Introduce y2: ");
+CreaTextbox(ventana,t1,120,80,10,10);
+CreaTextbox(ventana,t2,125,80,10,10);
+CreaTextbox(ventana,t3,130,80,10,10);
+CreaTextbox(ventana,t4,135,80,10,10);
+CreaTextbox(ventana,t5,230,215,10,10);
+CreaTextbox(ventana,t6,230,250,10,10);
+CreaBoton(ventana, btnMagnitud, "Calcular Magnitud",230, 150, 80, 30);
+CreaBoton(ventana, btnDireccion, "Calcular Direccion",230, 200, 80, 30);
+}
+def ObtieneVariables
+{
+LeeTextBox(t1,s1);
+LeeTextBox(t2,s2);
+LeeTextBox(t3,s3);
+LeeTextBox(t4,s4);
+}
+def calculaMagnitud
+{
+punto1:= x2-x1;
+punto2:= y2-y1;
+punto1:= numerador^2;
+punto2:= denominador^2;
+res:= punto1 + punto2;
+i:= 0;
+while(aux < res)
+{
+i:= i+0.1;
+aux := i;
+}
+for ( j = 0: 10, step 1)
+{
+z2:=res;
+z2:=z2/z1;
+z2:=z2+z1;
+z2:=z2/2;
+z1:=z2;
+}
+}
+def calculaDireccion
+{
+numerador := y2-y1;
+denominador := x2-x1;
+x := numerador / denominador;
+if (x >= 0)
+{
+temp1 := x;
+}
+else
+{
+temp1 := -x;
+}
+if (temp1 <= 1.0)
+{
+temp2 := temp1;
+}
+else
+{
+temp2 := (temp1 - 1) / (temp1 + 1);
+}
+sum := temp2;
+for(i=1:6, step 1)
+{
+exponente := (i * 2) + 1;
+bse := temp2;
+for(j=0;exponente,step 1)
+{
+bse := bse * bse;
+}
+mod := i - (2 * (i / 2));
+if (mod != 0)
+{
+bse := bse * -1;
+}
+sum := sum + (bse / ((i * 2) + 1));
+}
+if (temp1 > 1.0)
+{
+sum := sum+0.785398;
+}
+if (x >= 0)
+{
+x := sum;
+}
+else
+{
+x := -sum;
+}
+x := x * (180.0f / 3.1416);
+}
+Main
+{
+Ventana();
+ObtieneVariables();
+calculaMagnitud();
+calculaDireccion();
+ImprimeTextBox(t5,z2);
+ImprimeTextBox(t6, x);
+}

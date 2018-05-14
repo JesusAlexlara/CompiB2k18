@@ -1,0 +1,120 @@
+label lbSol, lbRb, lbRh;
+vent v;
+boton bC;
+textBox tbNum, tbBin, tbHex;
+
+int nIn,nb,rb,db,nh,rh,dh;
+string nBin, nbAux, nHex, nhAux;
+
+def binario{
+	LeeTextBox(tbNum, nIn);
+	nb := nIn;
+	rb := nIn;
+	db := nIn;
+
+	while(db > 0){
+		db := nb / 2;
+		rb := nb - (db * 2);
+		nb := db;
+		nbAux := nBin;
+		
+		switch(rb){
+			case 0
+			{ nBin := "0"; }
+			break;
+			case 1
+			{ nBin := "1"; }
+			break;
+		}
+
+		Concat(nBin, nbAux);
+	}
+	ImprimeTextBox(tbBin, nBin);
+}
+
+def hexadecimal{
+	LeeTextBox(tbNum, nIn);
+	nh := nIn;
+	rh := nIn;
+	dh := nIn;
+
+	while(dh > 0){
+		dh := nh / 16;
+		rh := nh - (dh * 16);
+		nh := dh;
+		
+		nhAux := nHex;
+		switch(rh){
+			case 0
+			{ nHex := "0"; }
+			break;
+			case 1
+			{ nHex := "1"; }
+			break;
+			case 2
+			{ nHex := "2"; }
+			break;
+			case 3
+			{ nHex := "3"; }
+			break;
+			case 4
+			{ nHex := "4"; }
+			break;
+			case 5
+			{ nHex := "5"; }
+			break;
+			case 6
+			{ nHex := "6"; }
+			break;
+			case 7
+			{ nHex := "7"; }
+			break;
+			case 8
+			{ nHex := "8"; }
+			break;
+			case 9
+			{ nHex := "9"; }
+			break;
+			case 10
+			{ nHex := "A"; }
+			break;
+			case 11
+			{ nHex := "B"; }
+			break;
+			case 12
+			{ nHex := "C"; }
+			break;
+			case 13
+			{ nHex := "D"; }
+			break;
+			case 14
+			{ nHex := "E"; }
+			break;
+			case 15
+			{ nHex := "F"; }
+			break;
+		}
+		Concat(nHex, nhAux);
+	}
+	ImprimeTextBox(tbHex, nHex);
+}
+
+def calcula{
+	binario();
+	hexadecimal();
+}
+
+Main{
+	CreaVentana(v, "conversion de numeros", 600, 600, 0, 0);
+	CreaLabel(lbSol, v, 10, 50, "Dame un número:");
+	CreaLabel(lbSol, v, 10, 150, "Resultado en binario");
+	CreaLabel(lbSol, v, 10, 250, "Resultado en hexadecimal");
+
+	CreaTextbox(tbNum, v1, 300, 50, 100, 50);
+	CreaTextbox(tbNum, v1, 300, 150, 100, 50);
+	CreaTextbox(tbNum, v1, 300, 250, 100, 50);
+	CreaBoton(v, bC, "Calcula", 450, 50, 100, 50);
+	
+	CreaEvento(bC, calcula);
+	Loop(v);
+}

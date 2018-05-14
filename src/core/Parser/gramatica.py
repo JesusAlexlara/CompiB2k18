@@ -168,6 +168,21 @@ gramatica = [
 ]
 
 
+def carga_gramatica():
+    g = []
+    with open('gramatica.txt', 'r') as gramatica:
+        for r in gramatica.readlines():
+            cut = r.split('->')
+            produccion = []
+            produccion.append(cut[0].replace(' ', ''))
+            cut = cut[1].split(' ')
+
+            for t in cut:
+                if t:
+                    produccion.append(t.replace(' ', ''))
+            g.append(produccion)
+    return g
+
 def str_gram(p):
     std = ''
     for n in gramatica[p][1:]:
@@ -177,7 +192,9 @@ def str_gram(p):
 
 
 
-
+if __name__ == "__main__":
+    gramatica = carga_gramatica()
+    print(gramatica)
 
 
 
