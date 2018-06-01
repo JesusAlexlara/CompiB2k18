@@ -1,4 +1,8 @@
-vent ventana ; textBox entrada , salida ; boton btn ; label ls ; int num;
+vent ventana ; 
+textBox entrada , salida ; 
+boton btn ; 
+label ls ; 
+int num;
 
 def click_evento {
     int dato;

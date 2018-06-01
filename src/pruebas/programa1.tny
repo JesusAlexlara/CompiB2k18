@@ -4,12 +4,17 @@ boton btn ;
 label ls ; 
 int num;
 
+def hola {
+    int x;
+    x := 0;
+}
+
 Main{
     CreaTextbox(entrada, ventana, 50, 50, 10, 550);
     CreaTextbox(salida, ventana, 50, 80, 10, 550);
     CreaLabel(ls, ventana, 10, 20, "Numero");
     CreaBoton(btn, ventana, "Buscar", 100, 150, 20, 20);
-    CreaEvento(btn, click-evento);
+    CreaEvento(btn, click_evento);
     
     CreaVentana(ventana, "Fibo", 800, 600, 0, 0);
     Loop(ventana);

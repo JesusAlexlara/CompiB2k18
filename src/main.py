@@ -8,6 +8,7 @@ from core.editor import Editor
 from core.lexerEditor import LexerTiny
 from PyQt5.QtCore import QCoreApplication, QDate, QFile, Qt, QTextStream, QSize
 import sys
+from core.Utils.actionTable import ActionTable
 import iconos_rc
 from core.Parser.tablaAnalisis import genera_tabla, tablaSL
 from core.Lexer.lexer import lex
@@ -191,17 +192,19 @@ class MainAppCompiB(QMainWindow):
         self.addDockWidget(Qt.NoDockWidgetArea, dock)
         self.view_menu.addAction(dock.toggleViewAction())
 
+        table = ActionTable()
+        table.load('./core/Utils/table2.csv')
+
         ##Inicializa tabla
-        self.tab_acc.setColumnCount(77)
-        self.tab_acc.setHorizontalHeaderLabels(tablaSL)
+        self.tab_acc.setColumnCount(table.length)
+        self.tab_acc.setHorizontalHeaderLabels(table.column_names)
 
         ##Inserta datos
-        tabla = genera_tabla()
-        self.tab_acc.setRowCount(len(tabla))
+        self.tab_acc.setRowCount(len(table.elements))
         c = 0
-        for n in tabla:
+        for n in table.elements:
             a = 0
-            for p in tablaSL:
+            for p in table.column_names:
                 self.tab_acc.setItem(c, a, QTableWidgetItem(n[p]))
                 a = a + 1
             c = c + 1
@@ -326,8 +329,8 @@ class MainAppCompiB(QMainWindow):
             cadena = cadena + k[0]
 
         #parser = Evalua_cadena(cadena)
-        parser = Parser(cadena)
-        res = parser.evalua()
+        parser = Parser()
+        res = parser.evalua(tokens)
 
         if not res:
             QMessageBox.about(self, 'error', 'El codigo contiene errores')

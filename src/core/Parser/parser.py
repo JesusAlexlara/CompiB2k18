@@ -2,6 +2,9 @@ from functools import reduce
 
 from .tablaAnalisis import genera_tabla
 from .gramatica import *
+from ..Utils.grammar import Grammar
+from ..Utils.actionTable import ActionTable
+from ..Utils.stack import Stack
 import operator
 
 class Pila():
@@ -120,41 +123,52 @@ class Evalua_cadena:
 
 
 class Parser:
-    def __init__(self, cadena):
-        self.cadena = cadena + '$'
-        self.tabla_as = genera_tabla()
-        self.gramatica = gramatica
+    def __init__(self):
+        self.tabla_as = ActionTable()
+        self.gramatica = Grammar()
         self.tabla_ac = []
 
-    def evalua(self):
-        stack = Pila()
-        pila = Pila()
+    def evalua(self, tokens):
+        self.tabla_as.load('core/Utils/table2.csv')
+        self.gramatica.load('core/Utils/gramatica.txt')
+
+        stack = Stack()
+        pila = Stack()
 
         stack.push('$0')
         pila.push(0)
         edo = 0
         i = 0
-        while i < len(self.cadena):
-            accion = []
-            c = self.cadena[i]
-            edo = pila.peek()
-            res = self.tabla_as[edo][c]
+        tokens.append(('$', '$', 'FINAL'))
 
-            if 'd' in res:
+        while i < len(tokens):
+            accion = []
+            c = tokens[i][0]
+            edo = pila.peek()
+            res = self.tabla_as.elements[edo][c]
+
+            if 's' in res:
                 edo_r = int(res[1:])
+                if edo_r == 55:
+                    print("Aqui")
                 stack.push(c + str(edo_r))
                 pila.push(edo_r)
-
+                #cad = reduce(operator.add, tokens[i:][0])+'$'
+                #cad = ''.join(tokens[i:][0]) + '$'
+                cad = ''
+                for count in range(i, len(tokens)):
+                    s = tokens[count][0]
+                    cad = cad + ' ' + s
                 accion.append(stack.str)
-                accion.append(self.cadena[i:])
+                accion.append(cad)
                 accion.append(res)
                 accion.append('')
 
             elif 'r' in res:
                 res_b = res
                 d = int(res[1:])
-                produccion = self.gramatica[d][0]
-                rd = len(self.gramatica[d][1:])
+                produccion = self.gramatica.productions[d][0]
+                rd = len(self.gramatica.productions[d][1:])
 
                 accion.append(stack.str_full)
 
@@ -163,16 +177,20 @@ class Parser:
                     pila.pop()
 
                 edo = pila.peek()
-                res = self.tabla_as[edo][produccion]
+                res = self.tabla_as.elements[edo][produccion]
                 if not res.isdigit():
                     return False
 
                 edo_r = int(res)
                 stack.push(produccion + str(edo_r))
                 pila.push(edo_r)
-
-                accion.append(self.cadena[i:])
-                accion.append(res_b + ' - ' + str_gram(d))
+                #cad = reduce(operator.add, tokens[i:][0]) + '$'
+                cad = ''
+                for count in range(i, len(tokens)):
+                    s = tokens[count][0]
+                    cad = cad + ' ' + s
+                accion.append(cad)
+                accion.append(res_b + ' - ' + self.gramatica.str(d))
                 accion.append('')
                 i = i - 1
             elif res == 'acc':
@@ -181,12 +199,3 @@ class Parser:
                 return False
             self.tabla_ac.append(accion)
             i = i + 1
-
-    def pos_gramatica(self, pos):
-        cont = 0
-        for elemento in self.gramatica:
-            for produccion in elemento:
-                if cont >= pos:
-                    return (elemento, produccion)
-                else:
-                    cont = cont + 1
