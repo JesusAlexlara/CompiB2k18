@@ -351,14 +351,17 @@ class MainAppCompiB(QMainWindow):
                 self.tab_ans.setItem(c, 3, QTableWidgetItem('---'))
             c = c + 1
 
-        self.tab_sim.setRowCount(len(parser.varibles))
+        self.tab_sim.setRowCount(len(parser.variables))
+
+        ##Esquema de traducciones
+        #parser.pg.esquema_Traduccion()
 
         c = 0
-        for t in parser.varibles:
+        for t in parser.variables:
             print(t)
             self.tab_sim.setItem(c, 1, QTableWidgetItem(t))
-            self.tab_sim.setItem(c, 0, QTableWidgetItem(parser.pg.varibles[t][0]))
-            self.tab_sim.setItem(c, 2, QTableWidgetItem(parser.pg.varibles[t][1]))
+            self.tab_sim.setItem(c, 0, QTableWidgetItem(parser.variables[t][0]))
+            self.tab_sim.setItem(c, 2, QTableWidgetItem(parser.variables[t][1]))
             c = c + 1
 
         self.tab_ans.resizeColumnsToContents()

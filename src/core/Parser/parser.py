@@ -134,7 +134,12 @@ class Parser:
         self.gramatica = Grammar()
         self.tabla_ac = []
 
-        self.pg = Program()
+        #self.pg = Program()
+
+        self.var_tipo = None
+        self.var_id = Stack()
+        self.variables = {}
+
 
 
     def evalua(self, tokens):
@@ -156,19 +161,6 @@ class Parser:
             edo = pila.peek()
             res = self.tabla_as.elements[edo][c]
 
-            if tokens[i][2] == 'COMPARACION':
-                self.pg.comp.push(tokens[i][1])
-            elif tokens[i][2] == 'OPSUMA':
-                self.pg.opsum.push(tokens[i][1])
-            elif tokens[i][2] == 'OPMULT':
-                self.pg.opmult.push(tokens[i][1])
-            elif tokens[i][2] == 'TIPO':
-                self.pg.tipo.push(tokens[i][1])
-            elif tokens[i][2] == 'NUM':
-                self.pg.num.push(tokens[i][1])
-            elif tokens[i][2] == 'ID':
-                self.pg.id.push(tokens[i][1])
-
 
             if 's' in res:
                 edo_r = int(res[1:])
@@ -187,11 +179,24 @@ class Parser:
                 accion.append(res)
                 accion.append('')
 
+                #if tokens[i][2] == 'COMPARACION':
+                #    self.pg.comp.push(tokens[i][1])
+                #elif tokens[i][2] == 'OPSUMA':
+                #    self.pg.opsum.push(tokens[i][1])
+                #elif tokens[i][2] == 'OPMULT':
+                #    self.pg.opmult.push(tokens[i][1])
+                #elif tokens[i][2] == 'TIPO':
+                #    self.pg.tipo.push(tokens[i][1])
+                #elif tokens[i][2] == 'NUM':
+                #    self.pg.num.push(tokens[i][1])
+                #elif tokens[i][2] == 'ID':
+                #    self.pg.id.push(tokens[i][1])
+
             elif 'r' in res:
                 res_b = res
                 d = int(res[1:])
 
-                self.pg.redux.append([d, self.gramatica.productions[d]])
+                #self.pg.redux.append([d, self.gramatica.productions[d]])
 
                 produccion = self.gramatica.productions[d][0]
                 rd = len(self.gramatica.productions[d][1:])
@@ -222,13 +227,13 @@ class Parser:
 
                 #########################Acciones de las reducciones####################
 
-                #if produccion == 'tipo':
-                #    self.pg.var_tipo = tokens[i][1]
-                #if produccion == 'identificadores':
-                #    self.pg.var_id.push(tokens[i][1])
-                #if produccion == 'sent-declara':
-                #    while self.pg.var_id.is_empty():
-                #        self.pg.varibles[self.pg.var_id.pop()] = [self.pg.var_tipo, None]
+                if produccion == 'tipo':
+                    self.var_tipo = tokens[i][1]
+                if produccion == 'identificadores':
+                    self.var_id.push(tokens[i][1])
+                if produccion == 'sent-declara':
+                    while self.var_id.is_empty():
+                        self.variables[self.var_id.pop()] = [self.var_tipo, None]
 
 
 
