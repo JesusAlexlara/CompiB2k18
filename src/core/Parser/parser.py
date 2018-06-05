@@ -5,6 +5,7 @@ from .gramatica import *
 from ..Utils.grammar import Grammar
 from ..Utils.actionTable import ActionTable
 from ..Utils.stack import Stack
+from ..Utils.program import Program
 import operator
 
 class Pila():
@@ -43,6 +44,7 @@ class Evalua_cadena:
         self.gramatica = gramatica
         self.tabla_ac = []
         self.lista_r = []
+        self.variables = []
 
     def evalua(self):
         if self.cadena and self.tabla_as and self.gramatica:
@@ -98,6 +100,10 @@ class Evalua_cadena:
                     stack = stack + elementos[0] + res
                     tam_remover = tam_remover + len(res)
 
+                    #Crea arboles o variables
+
+
+
                 if res == 'acc':
                     accion.append(stack)
                     accion.append(self.cadena[i + 1:])
@@ -128,9 +134,12 @@ class Parser:
         self.gramatica = Grammar()
         self.tabla_ac = []
 
+        self.pg = Program()
+
+
     def evalua(self, tokens):
-        self.tabla_as.load('core/Utils/table2.csv')
-        self.gramatica.load('core/Utils/gramatica.txt')
+        self.tabla_as.load('core/Utils/tbAs.csv')
+        self.gramatica.load('core/Utils/gramaticav2.txt')
 
         stack = Stack()
         pila = Stack()
@@ -146,6 +155,20 @@ class Parser:
             c = tokens[i][0]
             edo = pila.peek()
             res = self.tabla_as.elements[edo][c]
+
+            if tokens[i][2] == 'COMPARACION':
+                self.pg.comp.push(tokens[i][1])
+            elif tokens[i][2] == 'OPSUMA':
+                self.pg.opsum.push(tokens[i][1])
+            elif tokens[i][2] == 'OPMULT':
+                self.pg.opmult.push(tokens[i][1])
+            elif tokens[i][2] == 'TIPO':
+                self.pg.tipo.push(tokens[i][1])
+            elif tokens[i][2] == 'NUM':
+                self.pg.num.push(tokens[i][1])
+            elif tokens[i][2] == 'ID':
+                self.pg.id.push(tokens[i][1])
+
 
             if 's' in res:
                 edo_r = int(res[1:])
@@ -167,6 +190,9 @@ class Parser:
             elif 'r' in res:
                 res_b = res
                 d = int(res[1:])
+
+                self.pg.redux.append([d, self.gramatica.productions[d]])
+
                 produccion = self.gramatica.productions[d][0]
                 rd = len(self.gramatica.productions[d][1:])
 
@@ -193,6 +219,19 @@ class Parser:
                 accion.append(res_b + ' - ' + self.gramatica.str(d))
                 accion.append('')
                 i = i - 1
+
+                #########################Acciones de las reducciones####################
+
+                #if produccion == 'tipo':
+                #    self.pg.var_tipo = tokens[i][1]
+                #if produccion == 'identificadores':
+                #    self.pg.var_id.push(tokens[i][1])
+                #if produccion == 'sent-declara':
+                #    while self.pg.var_id.is_empty():
+                #        self.pg.varibles[self.pg.var_id.pop()] = [self.pg.var_tipo, None]
+
+
+
             elif res == 'acc':
                 return True
             else:

@@ -150,6 +150,11 @@ class MainAppCompiB(QMainWindow):
         self.addDockWidget(Qt.RightDockWidgetArea, dock)
         self.view_menu.addAction(dock.toggleViewAction())
 
+        ##Inicializa tabla de simbolos
+        headerLabels = ('Tipo', 'Nombre', 'Contenido')
+        self.tab_sim.setColumnCount(3)
+        self.tab_sim.setHorizontalHeaderLabels(headerLabels)
+
     def create_dockTokens(self):
         dock = QDockWidget('Tokens', self)
 
@@ -193,7 +198,7 @@ class MainAppCompiB(QMainWindow):
         self.view_menu.addAction(dock.toggleViewAction())
 
         table = ActionTable()
-        table.load('./core/Utils/table2.csv')
+        table.load('./core/Utils/tbAs.csv')
 
         ##Inicializa tabla
         self.tab_acc.setColumnCount(table.length)
@@ -324,11 +329,8 @@ class MainAppCompiB(QMainWindow):
             self.tab_tokens.setItem(c, 2, QTableWidgetItem(t[2]))
             c = c + 1
         self.tab_tokens.resizeColumnsToContents()
-        cadena = ""
-        for k in tokens:
-            cadena = cadena + k[0]
 
-        #parser = Evalua_cadena(cadena)
+
         parser = Parser()
         res = parser.evalua(tokens)
 
@@ -348,7 +350,20 @@ class MainAppCompiB(QMainWindow):
                 self.tab_ans.setItem(c, 2, QTableWidgetItem(t[2]))
                 self.tab_ans.setItem(c, 3, QTableWidgetItem('---'))
             c = c + 1
+
+        self.tab_sim.setRowCount(len(parser.varibles))
+
+        c = 0
+        for t in parser.varibles:
+            print(t)
+            self.tab_sim.setItem(c, 1, QTableWidgetItem(t))
+            self.tab_sim.setItem(c, 0, QTableWidgetItem(parser.pg.varibles[t][0]))
+            self.tab_sim.setItem(c, 2, QTableWidgetItem(parser.pg.varibles[t][1]))
+            c = c + 1
+
         self.tab_ans.resizeColumnsToContents()
+
+
 
 
 def main():

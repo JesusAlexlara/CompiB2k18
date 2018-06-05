@@ -1,11 +1,11 @@
 programa' -> programa
 programa -> estructura def-main
 programa -> def-main
-estructura -> estructura def
-estructura -> def
-def -> sent-declara
-def -> def-func
-def-func -> func id { secuencia-sent }
+estructura -> estructura deff
+estructura -> deff
+deff -> sent-declara
+deff -> def-func
+def-func -> def id { secuencia-sent }
 def-vent -> CreaVentana ( id , id , num , num , num , num ) ;
 def-ctrl -> crea-control
 def-ctrl -> CreaLabel ( id , id , num , num , id ) ;

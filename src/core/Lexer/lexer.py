@@ -3,14 +3,20 @@ import re
 
 RESERVADA = "RESERVADA"
 KEYWORD   = "KEYWORD"
-STRING    = "STRING"
+
+COMPARACION = "COMPARACION"
+OPSUMA = "OPSUMA"
+OPMULT = "OPMULT"
+TIPO = "TIPO"
+NUM = "NUM"
+ID = "ID"
 
 exp_tokens = [
     [r'[ \n\t]+', None, None],
     [r'#[^\n]*', None, None],
-    [r'(int?)(?=\s)', 'int', KEYWORD],
-    [r'(float?)(?=\s)', 'float', KEYWORD],
-    [r'(string?)(?=\s)', 'string', KEYWORD],
+    [r'(int?)(?=\s)', 'int', TIPO],
+    [r'(float?)(?=\s)', 'float', TIPO],
+    [r'(string?)(?=\s)', 'string', TIPO],
     [r'{', '{',RESERVADA],
     [r'}', '}', RESERVADA],
     [r'\(', '(', RESERVADA],
@@ -22,7 +28,7 @@ exp_tokens = [
     [r'(break?)(?=;)', 'break', RESERVADA],
     [r'(def?)(?=\s)', 'def', RESERVADA],
     [r'(CreaVentana?)(?=\()', 'CreaVentana', RESERVADA],
-    [r'(?:[0-9]+(?:\.[0-9]*)?|(?:[0-9]+)?\.[0-9]+)', 'num', KEYWORD],
+    [r'(?:[0-9]+(?:\.[0-9]*)?|(?:[0-9]+)?\.[0-9]+)', 'num', NUM],
     [r',', ',', RESERVADA],
     [r'(CreaLabel?)(?=\()', 'CreaLabel', RESERVADA],
     [r'(CreaBoton?)(?=\()', 'CreaBoton', RESERVADA],
@@ -44,12 +50,12 @@ exp_tokens = [
     [r'(ImprimeTextBox?)(?=\()', 'ImprimeTextBox', RESERVADA],
     [r'(Concat?)(?=\()', 'Concat', RESERVADA],
     [r'(Mbox?)(?=\()', 'Mbox', RESERVADA],
-    [r'==', '==', RESERVADA],
-    [r'>=', '>=', RESERVADA],
-    [r'<=', '<=', RESERVADA],
-    [r'!=', '!=', RESERVADA],
-    [r'\+', '+', RESERVADA],
-    [r'-', '-', RESERVADA],
+    [r'==', '==', COMPARACION],
+    [r'>=', '>=', COMPARACION],
+    [r'<=', '<=', COMPARACION],
+    [r'!=', '!=', COMPARACION],
+    [r'\+', '+', OPSUMA],
+    [r'-', '-', OPSUMA],
     [r'\^', '^', RESERVADA],
     [r'=', '=', RESERVADA],
     [r';', ';', RESERVADA],
@@ -57,12 +63,12 @@ exp_tokens = [
     [r'(textBox?)(?=\s)', 'textBox', RESERVADA],
     [r'(label?)(?=\s)', 'label', RESERVADA],
     [r'(boton?)(?=\s)', 'boton', RESERVADA],
-    [r'\*', '*', RESERVADA],
-    [r'/', '/', RESERVADA],
-    [r'>', '>', RESERVADA],
-    [r'<', '<', RESERVADA],
-    [r'\"(.*?)\"', 'id', STRING],
-    [r'[A-Za-z][A-Za-z0-9_]*', 'id', KEYWORD],
+    [r'\*', '*', OPMULT],
+    [r'/', '/', OPMULT],
+    [r'>', '>', COMPARACION],
+    [r'<', '<', COMPARACION],
+    [r'\"(.*?)\"', 'id', ID],
+    [r'[A-Za-z][A-Za-z0-9_]*', 'id', ID],
 ]
 
 
